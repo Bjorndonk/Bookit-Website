@@ -1,0 +1,100 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+    <div class="container">
+    <!--Displaying Favorites-->
+
+
+
+
+
+        <style> 
+        
+            h1 { 
+                color: rgb(29, 27, 27);
+                text-align: center;
+                font-size: 50px;
+                font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            }
+            body { 
+                background-color: rgb(233, 229, 223);
+            }
+            
+            #likedbookstable {
+              font-family: Arial, Helvetica, sans-serif;
+              border-collapse: collapse;
+              width: 100%;
+            }
+            
+            #likedbookstable td, #likedbookstable th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+            
+            #likedbookstable tr:nth-child(even){
+                background-color: rgb(197, 184, 184);
+            }
+            
+            #likedbookstable tr:hover {
+                background-color: #ddd;
+            }
+            
+            #likedbookstable th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color:rgb(197, 184, 184);
+                color: black;
+            }
+        </style>
+    
+    <h1>Liked Books</h1>
+    <body>
+    <div> 
+        <% if (data && data.length > 0) { %>
+    <table class="table" id = "likedbookstable">
+
+        <thead>
+            <th>Book Title</th>
+            <th>Book Author</th>
+            <th>Book Image</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <% data.forEach(book=> { %>
+                <tr>
+                    <td>
+                        <%= book.title %>
+                    </td>
+                    <td>
+                        <%= book.author %>
+                    </td>
+                    <td>
+                        <div>
+                            <img src="<%- book.imageurl %>"></img>
+                        </div>
+                    </td>
+                    <td>
+                        <form action="/deleteLikedBook" method="POST">
+                            <div class="mb-3">
+                              <button type="submit" class="btn btn-info">Remove Liked Book</button>
+                              <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
+                              <input type="hidden" id="author" name="author" value="<%- book.author %>"/>
+                            </div>
+                          </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>    
+    </table>
+    <% } else { %>
+        <h1>You haven't liked any books yet!</h1>
+    <% } %>
+    </div>
+    
+</body>
+    </div>
+</main>
+
+<%- include ('../partials/footer') %>
